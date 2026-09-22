@@ -1,0 +1,25 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "meet-teams-clone",
+  "main": "src/worker.js",
+  "compatibility_date": "2026-09-01",
+
+  // Serves everything in /public as static files.
+  // Any request that doesn't match a static file falls through to the Worker (src/worker.js),
+  // which handles the /api/* routes.
+  "assets": {
+    "directory": "./public",
+    "not_found_handling": "single-page-application"
+  },
+
+  // Non-secret config. Safe to commit.
+  "vars": {
+    "RTK_HOST_PRESET": "group_call_host",
+    "RTK_GUEST_PRESET": "group_call_participant"
+  }
+
+  // Secrets (set these with `wrangler secret put <NAME>`, NOT here):
+  //   CF_ACCOUNT_ID   - your Cloudflare account ID
+  //   CF_API_TOKEN    - API token with "Realtime Admin" / "Realtime" permission
+  //   RTK_APP_ID      - your RealtimeKit App ID
+}
